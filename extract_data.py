@@ -198,7 +198,7 @@ def make_graph_for_t2(data_generator):
 	plt.savefig('task2.png')
 
 
-def make_graph_for_t3(data_generator):
+def make_graph_for_t3a(data_generator):
 	tcp_window = []
 	avg_throughput1 = []
 	avg_throughput2 = []
@@ -228,13 +228,91 @@ def make_graph_for_t3(data_generator):
 	plt.title('TCP Throughput')
 	plt.legend()
 	plt.grid(True)
-	plt.savefig('task3.png')
+	plt.savefig('task3a.png')
+
+
+def make_graph_for_t3b(data_generator):
+	tcp_window = []
+	avg_throughput1 = []
+	avg_throughput2 = []
+	avg_throughput3 = []
+	stable_throughput1 = []
+	stable_throughput2 = []
+	stable_throughput3 = []
+	v1s=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,10,10,10,10,10,10,15,15,15,15,15,15,20,20,20,30]
+	v2s=[10,10,10,10,10,15,15,15,15,20,20,20,30,30,50,15,15,15,15,20,20,20,30,30,50,20,20,20,30,30,50,30,30,50,50]
+	v3s=[15,20,30,50,100,20,30,50,100,30,50,100,50,100,100,20,30,50,100,30,50,100,50,100,100,30,50,100,50,100,100,50,100,100,100]
+	gen = data_generator()
+	for i, data in enumerate(gen):
+		if i == 0: continue
+		tcp_window.append((v1s[i-1], v2s[i-1], v3s[i-1]))
+		avg_throughput1.append(data['TCP1 Average Throughput'])
+		avg_throughput2.append(data['TCP2 Average Throughput'])
+		avg_throughput3.append(data['TCP3 Average Throughput'])
+		stable_throughput1.append(data['Stable Throughput 1'])
+		stable_throughput2.append(data['Stable Throughput 2'])
+		stable_throughput3.append(data['Stable Throughput 3'])
+	tcp_window = list(map(str, tcp_window))
+	plt.figure(figsize=(10, 14))
+	plt.xticks(rotation=90)
+	plt.plot(tcp_window, avg_throughput1, 'o', label='Average Throughput 1', color="red")
+	plt.plot(tcp_window, avg_throughput2, 'o', label='Average Throughput 2', color="green")
+	plt.plot(tcp_window, avg_throughput3, 'o', label='Average Throughput 3', color="pink")
+	plt.plot(tcp_window, stable_throughput1, 'x', label='Stable Throughput 1', color="red")
+	plt.plot(tcp_window, stable_throughput2, 'x', label='Stable Throughput 2', color="green")
+	plt.plot(tcp_window, stable_throughput3, 'x', label='Stable Throughput 3', color="pink")
+	plt.xlabel('Link delay')
+	plt.ylabel('Throughput')
+	plt.title('TCP Throughput')
+	plt.legend()
+	plt.grid(True)
+	plt.savefig('task3b.png')
+
+
+def make_graph_for_t3b2(data_generator):
+	tcp_window = []
+	avg_throughput1 = []
+	avg_throughput2 = []
+	avg_throughput3 = []
+	stable_throughput1 = []
+	stable_throughput2 = []
+	stable_throughput3 = []
+	v1s=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,10,10,10,10,10,10,10,10,10,15,15,15,15,15,15,20,20,20,30]
+	v2s=[10,10,10,10,10,15,15,15,15,20,20,20,30,30,50,15,15,15,15,20,20,20,30,30,50,20,20,20,30,30,50,30,30,50,50]
+	v3s=[15,20,30,50,100,20,30,50,100,30,50,100,50,100,100,20,30,50,100,30,50,100,50,100,100,30,50,100,50,100,100,50,100,100,100]
+	gen = data_generator()
+	for i, data in enumerate(gen):
+		if i == 0: continue
+		if v1s[i-1] == 0: continue
+		tcp_window.append((v1s[i-1], v2s[i-1], v3s[i-1]))
+		avg_throughput1.append(data['TCP1 Average Throughput'])
+		avg_throughput2.append(data['TCP2 Average Throughput'])
+		avg_throughput3.append(data['TCP3 Average Throughput'])
+		stable_throughput1.append(data['Stable Throughput 1'])
+		stable_throughput2.append(data['Stable Throughput 2'])
+		stable_throughput3.append(data['Stable Throughput 3'])
+	tcp_window = list(map(str, tcp_window))
+	plt.figure(figsize=(10, 14))
+	plt.xticks(rotation=90)
+	plt.plot(tcp_window, avg_throughput1, 'o', label='Average Throughput 1', color="red")
+	plt.plot(tcp_window, avg_throughput2, 'o', label='Average Throughput 2', color="green")
+	plt.plot(tcp_window, avg_throughput3, 'o', label='Average Throughput 3', color="pink")
+	plt.plot(tcp_window, stable_throughput1, 'x', label='Stable Throughput 1', color="red")
+	plt.plot(tcp_window, stable_throughput2, 'x', label='Stable Throughput 2', color="green")
+	plt.plot(tcp_window, stable_throughput3, 'x', label='Stable Throughput 3', color="pink")
+	plt.xlabel('Link delay')
+	plt.ylabel('Throughput')
+	plt.title('TCP Throughput')
+	plt.legend()
+	plt.grid(True)
+	plt.savefig('task3b2.png')
 
 
 def main():
 	f1 = r"/mnt/c/Users/Chris/Downloads/lab1tcp/EINTE/task1.log"
 	f2 = r"task2_5000.log"
-	f3 = r"/mnt/c/Users/Chris/Downloads/lab1tcp/EINTE/task3a.log"
+	f3a = r"/mnt/c/Users/Chris/Downloads/lab1tcp/EINTE/task3a.log"
+	f3b = r"/mnt/c/Users/Chris/Downloads/lab1tcp/EINTE/task3b.log"
 	stream = stream_file_lines(f1)
 	filtered = filter(line_is_relevant, stream)
 	#any(map(print, stream))
@@ -248,9 +326,15 @@ def main():
 	stream2 = stream_file_lines(f2)
 	x = lambda : make_t2_objs_from_stream(stream2)
 	make_graph_for_t2(x)
-	stream3 = stream_file_lines(f3)
+	stream3 = stream_file_lines(f3a)
 	x = lambda : make_t3_objs_from_stream(stream3)
-	make_graph_for_t3(x)
+	make_graph_for_t3a(x)
+	stream3 = stream_file_lines(f3b)
+	x = lambda : make_t3_objs_from_stream(stream3)
+	make_graph_for_t3b(x)
+	stream3 = stream_file_lines(f3b)
+	x = lambda : make_t3_objs_from_stream(stream3)
+	make_graph_for_t3b2(x)
 	
 	
 
