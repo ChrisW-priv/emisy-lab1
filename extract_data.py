@@ -206,7 +206,9 @@ def make_graph_for_t3(data_generator):
 	stable_throughput1 = []
 	stable_throughput2 = []
 	stable_throughput3 = []
-	for data in data_generator():
+	gen = data_generator()
+	for i, data in enumerate(gen):
+		if i == 0: continue
 		tcp_window.append(data['Link delay'])
 		avg_throughput1.append(data['TCP1 Average Throughput'])
 		avg_throughput2.append(data['TCP2 Average Throughput'])
@@ -231,7 +233,7 @@ def make_graph_for_t3(data_generator):
 
 def main():
 	f1 = r"/mnt/c/Users/Chris/Downloads/lab1tcp/EINTE/task1.log"
-	f2 = r"/mnt/c/Users/Chris/Downloads/lab1tcp/EINTE/task2.log"
+	f2 = r"task2_5000.log"
 	f3 = r"/mnt/c/Users/Chris/Downloads/lab1tcp/EINTE/task3a.log"
 	stream = stream_file_lines(f1)
 	filtered = filter(line_is_relevant, stream)
